@@ -80,6 +80,15 @@ read -p "Input database name for WordPress (e.g. yoursitecom): " dbname
 mysql -u root -e "CREATE DATABASE $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO root@localhost;FLUSH PRIVILEGES;"
 
 # STEP 6: finalization
+printf "
+    Visit IP server, then this is database connection details.
+    Database Name   : $dbname
+    Username        : root
+    Password        : (leave it blank)
+    Database Host   : localhost
+    Table Prefix    : (default 'wp_' or change)\n
+"
+
 printf "Reach to finalization. Please check your site.\n"
 printf "Exiting tool.\n"
 
