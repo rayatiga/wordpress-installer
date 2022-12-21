@@ -34,32 +34,39 @@ apt install -y apache2 ghostscript libapache2-mod-php mysql-server php php-bcmat
 # STEP 3: downloading latest version of WordPress in tar.gz file and configure
 printf "Configuring WordPress file.\n"
 cd /var/www/html
-wget https://wordpress.org/latest.tar.gz
+
+FILE=latest.tar.gz
+if test -f "$FILE"; then
+    printf "$FILE exists, decompress instead of redownload\n."
+else
+    wget https://wordpress.org/latest.tar.gz
+fi
+
 tar zxvf latest.tar.gz
 
 read -p "Input directory name for WordPress (e.g. yoursite.com): " dirname
 mv /var/www/html/wordpress /var/www/html/$dirname
 
-chown -R www-data:www-data /var/www/html/wordpress/$dirname
+chown -R www-data:www-data /var/www/html/$dirname
 
 # STEP 4: configuring apache2 config
 read -p "Input config name for apache2 (e.g. yoursite.com.conf): " confname
 {
-    echo "<VirtualHost *:80>"
-    echo "  DocumentRoot /var/www/html/$dirname"
-    echo "  <Directory /var/www/html/$dirname>"
-    echo "      Options FollowSymLinks"
-    echo "      AllowOverride Limit Options FileInfo"
-    echo "      DirectoryIndex index.php"
-    echo "      Require all granted"
-    echo "  </Directory>"
-    echo "  <Directory /var/www/html/$dirname/wp-content>"
-    echo "      Options FollowSymLinks"
-    echo "      Require all granted"
-    echo "      AllowOverride All"
-    echo "  </Directory>"
-    echo "</VirtualHost>"
-} >> /etc/apache2/sites-available/$confname
+    printf "<VirtualHost *:80>\n"
+    printf "  DocumentRoot /var/www/html/$dirname\n"
+    printf "  <Directory /var/www/html/$dirname>\n"
+    printf "      Options FollowSymLinks\n"
+    printf "      AllowOverride Limit Options FileInfo\n"
+    printf "      DirectoryIndex index.php\n"
+    printf "      Require all granted\n"
+    printf "  </Directory>\n"
+    printf "  <Directory /var/www/html/$dirname/wp-content>\n"
+    printf "      Options FollowSymLinks\n"
+    printf "      Require all granted\n"
+    printf "      AllowOverride All\n"
+    printf "  </Directory>\n"
+    printf "</VirtualHost>\n"
+} >>/etc/apache2/sites-available/$confname
 
 a2dissite *
 a2ensite $confname
@@ -69,14 +76,10 @@ systemctl restart apache2.service
 
 # STEP 5: creating database and the setting up
 read -p "Input database name for WordPress (e.g. yoursitecom): " dbname
-mysql --user=root << EOF
-CREATE DATABASE $dbname;
-GRANT ALL PRIVILEGES ON $dbname.* TO root@localhost;
-FLUSH PRIVILEGES;
-EOF
+mysql -u root -e "CREATE DATABASE $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO root@localhost;FLUSH PRIVILEGES;"
 
 # STEP 6: finalization
 printf "Reach to finalization. Please check your site.\n"
-printf "Exiting tool."
+printf "Exiting tool.\n"
 
-exit 0;
+exit 0
