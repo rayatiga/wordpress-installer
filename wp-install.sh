@@ -68,8 +68,6 @@ read -p "Input config name for apache2 (e.g. yoursite.com.conf): " confname
     printf "</VirtualHost>\n"
 } >>/etc/apache2/sites-available/$confname
 
-a2dissite 000-default.conf
-a2dissite *
 rm /etc/apache2/sites-enabled/*
 
 a2ensite $confname
