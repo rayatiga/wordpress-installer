@@ -35,10 +35,12 @@ apt install -y apache2 ghostscript libapache2-mod-php mysql-server php php-bcmat
 printf "Configuring WordPress file.\n"
 cd /var/www/html
 wget https://wordpress.org/latest.tar.gz
-sudo -u www-data: tar zxvf latest.tar.gz
+tar zxvf latest.tar.gz
 
 read -p "Input directory name for WordPress (e.g. yoursite.com): " dirname
-sudo -u www-data mv /var/www/html/wordpress /var/www/html/$dirname
+mv /var/www/html/wordpress /var/www/html/$dirname
+
+chown -R www-data:www-data /var/www/html/wordpress/$dirname
 
 # STEP 4: configuring apache2 config
 read -p "Input config name for apache2 (e.g. yoursite.com.conf): " confname
