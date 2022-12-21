@@ -52,20 +52,20 @@ chown -R www-data:www-data /var/www/html/$dirname
 # STEP 4: configuring apache2 config
 read -p "Input config name for apache2 (e.g. yoursite.com.conf): " confname
 {
-    printf "<VirtualHost *:80>\n"
-    printf "  DocumentRoot /var/www/html/$dirname\n"
-    printf "  <Directory /var/www/html/$dirname>\n"
-    printf "      Options FollowSymLinks\n"
-    printf "      AllowOverride Limit Options FileInfo\n"
-    printf "      DirectoryIndex index.php\n"
-    printf "      Require all granted\n"
-    printf "  </Directory>\n"
-    printf "  <Directory /var/www/html/$dirname/wp-content>\n"
-    printf "      Options FollowSymLinks\n"
-    printf "      Require all granted\n"
-    printf "      AllowOverride All\n"
-    printf "  </Directory>\n"
-    printf "</VirtualHost>\n"
+    echo "<VirtualHost *:80>"
+    echo "  DocumentRoot /var/www/html/$dirname"
+    echo "  <Directory /var/www/html/$dirname>"
+    echo "      Options FollowSymLinks"
+    echo "      AllowOverride Limit Options FileInfo"
+    echo "      DirectoryIndex index.php"
+    echo "      Require all granted"
+    echo "  </Directory>"
+    echo "  <Directory /var/www/html/$dirname/wp-content>"
+    echo "      Options FollowSymLinks"
+    echo "      Require all granted"
+    echo "      AllowOverride All"
+    echo "  </Directory>"
+    echo "</VirtualHost>"
 } >>/etc/apache2/sites-available/$confname
 
 a2dissite *
