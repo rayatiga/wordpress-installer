@@ -4,12 +4,17 @@
 # Compatible for Debian/Ubuntu based distro.
 # Recommended for fresh install Ubuntu server.
 
-# STEP -1: removing rest of file (especially for testing)
+# STEP -3: fisrt run
 if ! [ $(id -u) = 0 ]; then
-    printf "Not in root!\n"
+    printf "Please run as root!\n"
     exit 1
 fi
 
+printf "\nWordPress Installer Script by https://github.com/bydzen/. Well managed.\n"
+printf "Any issue? go to https://github.com/rayatiga/wordpress-installer/issues/. Create new issue.\n"
+printf "Visit more on https://github.com/rayatiga/wordpress-installer/. GitHub repository.\n"
+
+# STEP -2: removing rest of file (especially for testing)
 while true; do
     printf "\nThis script provide for development too. Therefore feature named 'CLEAN' will be introduce first.\nCLEAN will delete apache2 file as detail below.
     Root Directory  : /var/www/html/* (except latest.tar.gz and index.html)
@@ -21,7 +26,7 @@ while true; do
         find /var/www/html/ -mindepth 1 -name 'latest.tar.gz' -or -name 'index.html' -prune -o -exec rm -rf {} \;
         find /etc/apache2/sites-available/ -type f -not \( -name '000-default.conf' \) -delete
         sleep 2
-        printf "Deleted."
+        printf "Deleted.\n"
         sleep 2
         break
         ;;
@@ -31,7 +36,21 @@ while true; do
     *) printf "Please answer 'Y/y' or 'N/n'.\n" ;;
     esac
 done
-clear
+
+# STEP -1: giving change information
+printf "\nThis script will modified file as detail below.\n"
+printf "1. Directory /var/www/html/\n"
+printf "2. Directory /etc/apache2/sites-available/\n"
+printf "3. Directory /etc/apache2/sites-enabled/\n"
+
+printf "\nThis script can also make changes to the detail below.\n"
+printf "1. Altering user root databse\n"
+printf "2. Creating new database\n"
+printf "3. Creating new database user\n"
+printf "4. Creating new database password\n\n"
+
+read -n 1 -s -r -p "Press any key to confirm."
+printf "\n"
 
 # STEP 0: initialization
 printf "\nWelcome to wp-install.sh script!\n"
@@ -50,7 +69,7 @@ while true; do
     esac
 done
 
-# STEP 1: check root user
+# STEP 1: check root user (again)
 if ! [ $(id -u) = 0 ]; then
     printf "Not in root!\n"
     exit 1
@@ -131,7 +150,7 @@ while true; do
                 dbpassroot=$dbpass2
                 break
             else
-                printf "Password $dbpass1 and $dbpass2 is not matched!\n"
+                printf "Password $dbpass1 and $dbpass2 is not match!\n"
             fi
         done
         break
@@ -167,12 +186,12 @@ mysql -u root -p$dbpassroot -e "CREATE DATABASE $dbname;GRANT ALL PRIVILEGES ON 
 
 # STEP 6: finalization
 printf "
-    Visit IP server, then this is database connection details.
+    Visit IP server, then this is database connection detail.
     Database Name   : $dbname
     Username        : $dbuser
     Password        : $dbpass
     Database Host   : localhost
-    Table Prefix    : (default 'wp_' or change)\n
+    Table Prefix    : (default 'wp_' or change)
 
     Your complete information output from this program.
     File Downloaded : /var/www/html/$FILE
@@ -181,7 +200,8 @@ printf "
     For databse see above.
 "
 
-printf "\nReach to finalization. Please check your site.\n"
+printf "\nReach to finalization. Thank you.\n"
+printf "Please check your site.\n"
 printf "Exiting tool.\n"
 
 exit 0
