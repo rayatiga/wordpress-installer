@@ -10,19 +10,22 @@ if ! [ $(id -u) = 0 ]; then
     exit 1
 fi
 
+printf "\n"
 while true; do
-    read -p "Testing/under development? (y/n): " yn
+    read -p "Erase previously (i.e. development or testing)? (y/n): " yn
     case $yn in
     [Yy]*)
-        printf "Deleting WordPress directory and custom apache2 configuration..."
-        find /var/www/html/ -type f -not \( -name 'latest.tar.gz' -or -name 'index.html' \) -delete
+        printf "Deleting WordPress directory and custom apache2 configuration...\n"
+        find /var/www/html/ -mindepth 1 -name 'latest.tar.gz' -or -name 'index.html' -prune -o -exec rm -rf {} \;
         find /etc/apache2/sites-available/ -type f -not \( -name '000-default.conf' \) -delete
         sleep 2
         printf "Deleted."
-        sleep 1
+        sleep 2
         break
         ;;
-    [Nn]*) exit ;;
+    [Nn]*)
+        break
+        ;;
     *) printf "Please answer 'Y/y' or 'N/n'.\n" ;;
     esac
 done
@@ -65,7 +68,7 @@ if test -f "$FILE"; then
     printf "File $FILE exists, decompress instead of redownload.\n"
     sleep 3
 else
-    printf "Downloading latest version of Wordpress...\n"
+    printf "Downloading latest version of WordPress...\n"
     wget https://wordpress.org/latest.tar.gz >/dev/null 2>&1
     printf "Downloaded.\n"
 fi
@@ -123,6 +126,7 @@ while true; do
             read -p "Enter your confirmation root password: " dbpass2
             if [ "$dbpass1" = "$dbpass2" ]; then
                 dbpass=$dbpass2
+                dbpassroot=$dbpass2
                 break
             else
                 printf "Password $dbpass1 and $dbpass2 is not matched!\n"
@@ -133,8 +137,8 @@ while true; do
     [Nn]*)
         dbuser=root
         printf "Configure database for user $dbuser.\n"
-        read -p "Please enter database $dbuser password: " dbpass
-        mysql -u root -p$dbpass -e "ALTER USER $dbuser@localhost IDENTIFIED WITH caching_sha2_password BY '$dbpass';" >/dev/null 2>&1
+        read -p "Please enter database $dbuser password: " dbpassroot
+        mysql -u root -p$dbpassroot -e "ALTER USER $dbuser@localhost IDENTIFIED WITH caching_sha2_password BY '$dbpassroot';" >/dev/null 2>&1
         break
         ;;
     *) printf "Please answer 'Y/y' or 'N/n'.\n" ;;
@@ -147,7 +151,7 @@ while true; do
     [Yy]*)
         read -p "Please enter database username: " dbuser
         read -p "Please enter database user password: " dbpass
-        mysql -u root -p$dbpass "CREATE USER $dbuser@localhost IDENTIFIED BY '$dbpass';" >/dev/null 2>&1
+        mysql -u root -p$dbpassroot "CREATE USER $dbuser@localhost IDENTIFIED BY '$dbpass';" >/dev/null 2>&1
         break
         ;;
     [Nn]*)
@@ -157,7 +161,7 @@ while true; do
     *) printf "Please answer 'Y/y' or 'N/n'.\n" ;;
     esac
 done
-mysql -u root -p$dbpass -e "CREATE DATABASE $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost;FLUSH PRIVILEGES;" >/dev/null 2>&1
+mysql -u root -p$dbpassroot -e "CREATE DATABASE $dbname;GRANT ALL PRIVILEGES ON $dbname.* TO $dbuser@localhost;FLUSH PRIVILEGES;" >/dev/null 2>&1
 
 # STEP 6: finalization
 printf "
