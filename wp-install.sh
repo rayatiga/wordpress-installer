@@ -10,9 +10,11 @@ if ! [ $(id -u) = 0 ]; then
     exit 1
 fi
 
-printf "\n"
 while true; do
-    read -p "Erase previously (i.e. development or testing)? (y/n): " yn
+    printf "\nThis script provide for development too. Therefore feature named 'CLEAN' will be introduce first.\nCLEAN will delete apache2 file as detail below.
+    Root Directory  : /var/www/html/* (except latest.tar.gz and index.html)
+    Config Directory: /etc/apache2/sites-available/* (except 000-default.conf)\n"
+    read -p "Run CLEAN for erase previously? (y/n): " yn
     case $yn in
     [Yy]*)
         printf "Deleting WordPress directory and custom apache2 configuration...\n"
@@ -151,7 +153,7 @@ while true; do
     [Yy]*)
         read -p "Please enter database username: " dbuser
         read -p "Please enter database user password: " dbpass
-        mysql -u root -p$dbpassroot "CREATE USER $dbuser@localhost IDENTIFIED BY '$dbpass';" >/dev/null 2>&1
+        mysql -u root -p$dbpassroot -e "CREATE USER $dbuser@localhost IDENTIFIED BY '$dbpass';" >/dev/null 2>&1
         break
         ;;
     [Nn]*)
