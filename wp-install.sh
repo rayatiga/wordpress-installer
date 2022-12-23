@@ -183,6 +183,7 @@ while true; do
         printf "\nConfigure database for user $dbuser.\n"
         read -p "Enter your new $dbuser password: " dbpassroot
         mysql -u root -p$dbpassroot -e "ALTER USER $dbuser@localhost IDENTIFIED WITH caching_sha2_password BY '$dbpassroot';" >/dev/null 2>&1
+        dbpass=$dbpassroot
         break
         ;;
     *) printf "Please answer 'Y/y' or 'N/n'.\n" ;;
