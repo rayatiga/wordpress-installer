@@ -135,6 +135,7 @@ read -p "Input config name for apache2 (e.g. yoursite.com without '.conf'): " co
     # printf "      AllowOverride all\n"
     # printf "  </Directory>\n"
     # printf "</VirtualHost>\n"
+    # Below is active config.
     printf "<VirtualHost *:80>\n"
     printf "  DocumentRoot /var/www/html/$dirname\n"
     printf "  <Directory /var/www/html/$dirname>\n"
