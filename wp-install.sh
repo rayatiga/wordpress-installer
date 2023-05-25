@@ -128,6 +128,13 @@ chown -R www-data:www-data /var/www/html/$dirname
 printf "\n"
 read -p "Input config name for apache2 (e.g. yoursite.com without '.conf'): " confname
 {
+    # FALLBACK: if config below commenting line not properly work for your WordPress webstie.
+    # printf "<VirtualHost *:80>\n"
+    # printf "  DocumentRoot /var/www/html/\n"
+    # printf "  <Directory /var/www/html/*>\n"
+    # printf "      AllowOverride all\n"
+    # printf "  </Directory>\n"
+    # printf "</VirtualHost>\n"
     printf "<VirtualHost *:80>\n"
     printf "  DocumentRoot /var/www/html/$dirname\n"
     printf "  <Directory /var/www/html/$dirname>\n"
