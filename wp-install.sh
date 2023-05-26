@@ -163,7 +163,7 @@ printf "Configured. ✓\n\n"
 sleep 1
 
 # STEP 5: creating database and the setting up
-read -p "Input database name for WordPress (e.g. yoursitecom): " dbname
+read -p "Input database name for WordPress (e.g. db_yoursitecom): " dbname
 
 while true; do
     printf "\n"
