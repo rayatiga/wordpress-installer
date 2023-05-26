@@ -236,7 +236,7 @@ printf "
 "
 sleep 1
 
-printf "\nReach to finalization. Thank you.\n"
+printf "\nReach to finalization. Thank you!\n"
 printf "Please check your site.\n"
 printf "Exiting tool.\n"
 
