@@ -19,7 +19,7 @@ while true; do
     printf "\nThis script provide for development too. Therefore feature named 'CLEAN' will be introduce first.\nCLEAN will delete apache2 file as detail below.
     Root Directory  : /var/www/html/* (except latest.tar.gz and index.html)
     Config Directory: /etc/apache2/sites-available/* (except 000-default.conf)\n"
-    read -p "Run CLEAN for erase previously? (y/n): " yn
+    read -p "WARNING! Run CLEAN for erase previously? (y/n): " yn
     case $yn in
     [Yy]*)
         printf "\nDeleting WordPress directory and custom apache2 configuration...\n"
