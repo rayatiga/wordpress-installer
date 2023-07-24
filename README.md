@@ -5,7 +5,7 @@ Automation script for installing and setup WordPress in server.
 ## installation
 
 ```bash
-$ git clone https://github.com/rayatiga/wordpress-installer.git
+git clone https://github.com/rayatiga/wordpress-installer.git
 ```
 
 ## preparing
@@ -13,13 +13,13 @@ $ git clone https://github.com/rayatiga/wordpress-installer.git
 Go to inside `wordpress-installer` directory
 
 ```bash
-$ cd wordpress-installer/
+cd wordpress-installer/
 ```
 
 Make `wp-install.sh` executable
 
 ```bash
-$ chmod +x wp-install.sh
+chmod +x wp-install.sh
 ```
 
 ## using
@@ -27,11 +27,5 @@ $ chmod +x wp-install.sh
 Execute with `sudo` or `root` privileges
 
 ```bash
-$ sudo ./wp-install.sh
-```
-
-or
-
-```bash
-$ sudo sh wp-install.sh
+sudo ./wp-install.sh
 ```
