@@ -10,7 +10,7 @@ if ! [ $(id -u) = 0 ]; then
     exit 1
 fi
 
-printf "\nWordPress Installer Script by https://github.com/bydzen/. Well managed.\n"
+printf "\nWordPress Installer Script (WARNING: only for fresh server!) by https://github.com/bydzen/. Well managed.\n"
 printf "Any issue? go to https://github.com/rayatiga/wordpress-installer/issues/. Create new issue.\n"
 printf "Visit more on https://github.com/rayatiga/wordpress-installer/. GitHub repository.\n"
 
